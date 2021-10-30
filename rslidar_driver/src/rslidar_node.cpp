@@ -23,7 +23,7 @@ static void my_handler(int sig)
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "rsdriver");
+  ros::init(argc, argv, "rsdriver",ros::init_options::AnonymousName);
   ros::NodeHandle node;
   ros::NodeHandle private_nh("~");
 

@@ -16,12 +16,16 @@
 namespace rslidar_pointcloud
 {
 std::string model;
+std::string frame_id;
 
 /** @brief Constructor. */
 Convert::Convert(ros::NodeHandle node, ros::NodeHandle private_nh) : data_(new rslidar_rawdata::RawData())
 {
   data_->loadConfigFile(node, private_nh);  // load lidar parameters
   private_nh.param("model", model, std::string("RS16"));
+  private_nh.param("frame_id", frame_id, std::string("ls_lidar"));
+  
+//  ROS_ERROR("%s\t%s",frame_id.c_str(), model.c_str());
 
   // advertise output point cloud (before subscribing to input data)
   std::string output_points_topic;
@@ -51,7 +55,7 @@ void Convert::processScan(const rslidar_msgs::rslidarScan::ConstPtr& scanMsg)
 {
   pcl::PointCloud<pcl::PointXYZI>::Ptr outPoints(new pcl::PointCloud<pcl::PointXYZI>);
   outPoints->header.stamp = pcl_conversions::toPCL(scanMsg->header).stamp;
-  outPoints->header.frame_id = scanMsg->header.frame_id;
+  outPoints->header.frame_id = frame_id; //scanMsg->header.frame_id;
   outPoints->clear();
   if (model == "RS16")
   {
