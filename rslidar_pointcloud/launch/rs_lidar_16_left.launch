@@ -25,6 +25,7 @@
     <param name="min_distance" value="0.4"/>
     <param name="resolution_type" value="0.5cm"/>
     <param name="intensity_mode" value="1"/>
+    <param name="frame_id" value="left_lidar"/>
     
     <remap from="/rslidar_points" to="/left_lidar_points" />
   </node>
